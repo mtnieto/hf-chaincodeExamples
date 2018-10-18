@@ -14,7 +14,7 @@ import (
 )
 
 func checkInit(t *testing.T, stub *shim.MockStub, args [][]byte) {
-	res := stub.MockInit("1", args)
+	res := stub.MockInit("Greet", args)
 	if res.Status != shim.OK {
 		fmt.Println("Init failed", string(res.Message))
 		t.FailNow()
@@ -34,7 +34,7 @@ func checkState(t *testing.T, stub *shim.MockStub, name string, value string) {
 }
 
 func checkQuery(t *testing.T, stub *shim.MockStub, name string, value string) {
-	res := stub.MockInvoke("1", [][]byte{[]byte("greet"), []byte(name)})
+	res := stub.MockInvoke("Greet", [][]byte{[]byte("greet"), []byte(name)})
 	if res.Status != shim.OK {
 		fmt.Println("Query", name, "failed", string(res.Message))
 		t.FailNow()
@@ -51,7 +51,7 @@ func checkQuery(t *testing.T, stub *shim.MockStub, name string, value string) {
 }
 
 func checkInvoke(t *testing.T, stub *shim.MockStub, args [][]byte) {
-	res := stub.MockInvoke("1", args)
+	res := stub.MockInvoke("Greet", args)
 	if res.Status != shim.OK {
 		fmt.Println("Invoke", args, "failed", string(res.Message))
 		t.FailNow()
@@ -59,16 +59,15 @@ func checkInvoke(t *testing.T, stub *shim.MockStub, args [][]byte) {
 }
 
 func TestExample02_Init(t *testing.T) {
-	scc := new(SimpleChaincode)
+	scc := new(HelloWorldCC)
 	stub := shim.NewMockStub("ex02", scc)
 
-	// Init A=123 B=234
-	checkInit(t, stub, [][]byte{[]byte("init"), []byte("1"), []byte("Hello world")})
+	checkInit(t, stub, [][]byte{[]byte("init"), []byte("Greet"), []byte("Hello world")})
 
-	checkState(t, stub, "1", "Hello world")
-	checkQuery(t, stub, "1", "Hello world")
-	checkInvoke(t, stub, [][]byte{[]byte("setGreet"), []byte("1"), []byte("New Greet")})
-	checkQuery(t, stub, "1", "New Greet")
+	checkState(t, stub, "Greet", "Hello world")
+	checkQuery(t, stub, "Greet", "Hello world")
+	checkInvoke(t, stub, [][]byte{[]byte("setGreet"), []byte("Greet"), []byte("New Greet")})
+	checkQuery(t, stub, "Greet", "New Greet")
 
 }
 

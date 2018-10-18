@@ -13,11 +13,11 @@ import (
 	pb "github.com/hyperledger/fabric/protos/peer"
 )
 
-// SimpleChaincode example simple Chaincode implementation
-type SimpleChaincode struct {
+// HelloWorldCC example simple Chaincode implementation
+type HelloWorldCC struct {
 }
 
-func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
+func (t *HelloWorldCC) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	fmt.Println("ex02 Init")
 	_, args := stub.GetFunctionAndParameters()
 	var A, greet string    // Entities
@@ -40,7 +40,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	return shim.Success(nil)
 }
 
-func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
+func (t *HelloWorldCC) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	fmt.Println("ex02 Invoke")
 	function, args := stub.GetFunctionAndParameters()
 	if function == "greet" {
@@ -54,7 +54,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 }
 
 // Transaction makes payment of X units from A to B
-func (t *SimpleChaincode) greet(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (t *HelloWorldCC) greet(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	var A string    // Entities
 
 	if len(args) != 1 {
@@ -73,7 +73,7 @@ func (t *SimpleChaincode) greet(stub shim.ChaincodeStubInterface, args []string)
 }
 
 // Deletes an entity from state
-func (t *SimpleChaincode) setGreet(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (t *HelloWorldCC) setGreet(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) != 2 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
