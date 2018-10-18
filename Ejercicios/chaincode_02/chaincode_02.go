@@ -19,9 +19,7 @@ type SimpleChaincode struct {
 }
 
 type Person struct {
-	Name string  `json:"Name"`
-	Age string `json:"Age"`
-	Address string `json:"Address"`
+	
 }
 
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
